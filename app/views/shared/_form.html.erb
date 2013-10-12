@@ -1,0 +1,59 @@
+<% if @cat.persisted? %>
+	<form action="<%= cat_url(@cat.id) %>" method="post">
+	<input type = "hidden" name = "_method" value = "put">
+<% else %>
+	<form action="<%= cats_url %>" method="post">
+<% end %>
+
+	<input
+   name="authenticity_token"
+   type="hidden"
+   value="<%= form_authenticity_token %>">
+
+	<label for="cat_name">Name</label>
+	<input type="text" name="cat[name]" value="<%= @cat.name %>"><br>
+
+	<label for="cat_sex">Sex</label>
+	<label for="male">M</label>
+	<% if @cat.sex == "M" %>
+		<input type="radio" name="cat[sex]" value="M" checked>
+	<% else %>
+		<input type="radio" name="cat[sex]" value="M" >
+	<% end %>
+
+	<label for="female">F</label>
+	<% if @cat.sex == "F" %>
+		<input type="radio" name="cat[sex]" value="F" checked>
+	<% else %>
+		<input type="radio" name="cat[sex]" value="F" >
+	<% end %>
+	<br>
+
+
+
+		<label for="colors">Colors</label>
+	<select name="cat[color]">
+		<option value="" selected></option>
+		<% @cat.class.colors.each do |color|%>
+			<% if @cat.color == color %>
+				<option value="<%= color %>" selected > <%= color %> </option>
+			<% else %>
+				<option value="<%= color %>" > <%= color %> </option>
+			<% end %>
+		<% end%>
+	</select><br>
+
+	<label for="cat_birth_date">Date of Birth</label>
+	<input type="text" name="cat[birth_date]" value="<%= @cat.birth_date %>"><br>
+
+	<label for="cat_age">Age</label>
+	<input type="text" name="cat[age]" value="<%= @cat.age %>"><br>
+
+	<% if @cat.persisted? %>
+	  <input type="submit" value="Update Cat!">
+	<% else %>
+		<input type="submit" value="Create Cat!">
+	<% end %>
+
+
+</form>
